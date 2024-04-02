@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFCF9F22">
+
+    <TextView
+        android:id="@+id/top_rectangle"
+        android:layout_width="370dp"
+        android:layout_height="115dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_rectangle"
+        android:gravity="center"
+        android:text="Diasta"
+        android:textColor="#FFFFFF"
+        android:textSize="50sp" />
+
+    <TextView
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="150dp"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:text="Choisissez le compte:"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
+    <Button
+        android:id="@+id/btnOuvrirAccueil"
+        android:layout_width="359dp"
+        android:layout_height="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/rectangle"
+        android:text="Utilisateur"
+        android:textColor="#FFFFFF"
+        android:textSize="30dp" />
+    <Button
+
+        android:layout_width="359dp"
+        android:layout_height="70dp"
+        android:text="Ajouter un compte"
+        android:textColor="#FFFFFF"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="350dp"/>
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="290dp"
+        android:layout_width="41dp"
+        android:layout_height="36dp"
+        android:text="ou"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
+
+
+</RelativeLayout>
