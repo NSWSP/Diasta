@@ -17,6 +17,26 @@
         android:textColor="#FFFFFF"
         android:textSize="50sp" />
 
+    <ListView
+        android:id="@+id/listViewDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:textSize="30sp"
+        android:text="Ici s'afficheront les données"/>
+
+    <Button
+        android:id="@+id/ajout_de_mesure"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="720dp"
+        android:text="Ajouter +"
+        android:textSize="20dp"/>
+
+
+
     <TextView
         android:layout_marginStart="10dp"
         android:layout_marginTop="160dp"
@@ -28,10 +48,10 @@
 
     <Button
         android:id="@+id/btnRetourversMain"
-        android:layout_width="130dp"
+        android:layout_width="150dp"
         android:layout_height="48dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="690dp"
+        android:layout_marginTop="785dp"
         android:background="@drawable/rounded_rectangle"
         android:gravity="center"
         android:text="Retour ->"

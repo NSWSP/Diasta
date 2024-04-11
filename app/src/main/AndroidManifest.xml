@@ -12,7 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Diasta"
         tools:targetApi="31">
-        <activity android:name=".accueil"></activity>
+        <activity
+            android:name=".graph"
+            android:exported="false" />
+        <activity
+            android:name=".Graphique"
+            android:exported="false"
+            android:label="@string/title_activity_graphique"
+            android:theme="@style/Theme.Diasta" />
+        <activity android:name=".accueil" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -23,7 +31,5 @@
             </intent-filter>
         </activity>
     </application>
-
-
 
 </manifest>
