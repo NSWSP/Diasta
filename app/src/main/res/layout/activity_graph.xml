@@ -23,7 +23,10 @@
         android:layout_marginTop="160dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Entrez quelque chose ici" />
+        android:inputType="numberDecimal"
+        android:hint="Entrez une valeur en mg/l"/>
+
+
 
     <Button
         android:id="@+id/buttonSubmit"
