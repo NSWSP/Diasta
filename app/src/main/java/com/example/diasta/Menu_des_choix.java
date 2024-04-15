@@ -6,44 +6,41 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-public class menu_des_choix extends AppCompatActivity {
+public class Menu_des_choix extends AppCompatActivity {
+
+    private String accountName;  // Ajoutez cette ligne pour stocker le nom du compte
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_des_choix);
 
+        accountName = getIntent().getStringExtra("accountName");  // Récupérez le nom du compte ici
+
+        if (accountName == null) {
+            Toast.makeText(this, "Aucun compte n'est configuré. Veuillez vous connecter ou vous inscrire.", Toast.LENGTH_LONG).show();
+            finish(); // Fermez l'activité si aucun compte n'est trouvé
+            return;  // Ajoutez return pour arrêter l'exécution si aucun compte n'est trouvé
+        }
+
         Button btnStats = findViewById(R.id.btnstats);
         Button btnCommentaire = findViewById(R.id.btncommentaire);
 
         btnStats.setOnClickListener(v -> navigateToAccueil());
-        btnCommentaire.setOnClickListener(v -> navigateToCommentaire());  // Modifier pour conduire à l'activité Commentaire
+        btnCommentaire.setOnClickListener(v -> navigateToCommentaire());
     }
 
     private void navigateToAccueil() {
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        String accountName = sharedPreferences.getString("accountName", null);
-
-        if (accountName != null) {
-            Intent intent = new Intent(menu_des_choix.this, accueil.class);
-            intent.putExtra("accountName", accountName);
-            startActivity(intent);
-        } else {
-            // Faire quelque chose si le nom de compte n'est pas trouvé
-        }
+        Intent intent = new Intent(Menu_des_choix.this, accueil.class);
+        intent.putExtra("accountName", accountName);
+        startActivity(intent);
     }
 
     private void navigateToCommentaire() {
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        String accountName = sharedPreferences.getString("accountName", null);
-
-        if (accountName != null) {
-            Intent intent = new Intent(menu_des_choix.this, commentaires.class);
-            intent.putExtra("accountName", accountName);
-            startActivity(intent);
-        } else {
-            // Faire quelque chose si le nom de compte n'est pas trouvé
-        }
+        Intent intent = new Intent(Menu_des_choix.this, commentaires.class);
+        intent.putExtra("accountName", accountName);
+        startActivity(intent);
     }
 }

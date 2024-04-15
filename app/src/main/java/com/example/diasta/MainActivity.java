@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Button btnOuvrirAccueil = findViewById(R.id.btnOuvrirAccueil);
         Button btnAjouterCompte = findViewById(R.id.btnAjouterCompte); // Assurez-vous que ce bouton est dans votre layout
 
@@ -39,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addAccount() {
-        // Affichez une boîte de dialogue avec un champ de texte pour le nom du compte
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Ajouter un nouveau compte");
 
@@ -51,59 +51,57 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String accountName = input.getText().toString();
-                createAccount(accountName);
+                if (!accountName.isEmpty()) {
+                    createAccount(accountName);
+                } else {
+                    Toast.makeText(MainActivity.this, "Le nom du compte ne peut pas être vide.", Toast.LENGTH_LONG).show();
+                }
             }
         });
+
         builder.setNegativeButton("Annuler", (dialog, which) -> dialog.dismiss());
 
         builder.show();
     }
 
     private void createAccount(String accountName) {
-        if (!accountName.isEmpty()) {
-            SharedPreferences sharedPreferences = getSharedPreferences("UserAccounts", MODE_PRIVATE);
-            Set<String> accounts = sharedPreferences.getStringSet("accountNames", new HashSet<>());
-            if (accounts.contains(accountName)) {
-                Toast.makeText(MainActivity.this, "Ce nom de compte existe déjà.", Toast.LENGTH_LONG).show();
-                return;
-            }
-
+        SharedPreferences sharedPreferences = getSharedPreferences("UserAccounts", MODE_PRIVATE);
+        Set<String> accounts = new HashSet<>(sharedPreferences.getStringSet("accountNames", new HashSet<>()));
+        if (accounts.contains(accountName)) {
+            Toast.makeText(this, "Ce nom de compte existe déjà.", Toast.LENGTH_LONG).show();
+        } else {
             accounts.add(accountName);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putStringSet("accountNames", accounts);
             editor.apply();
 
-            Intent intent = new Intent(MainActivity.this, menu_des_choix.class);
+            Intent intent = new Intent(this, Menu_des_choix.class);
             intent.putExtra("accountName", accountName);
             startActivity(intent);
-        } else {
-            Toast.makeText(MainActivity.this, "Le nom du compte ne peut pas être vide.", Toast.LENGTH_LONG).show();
         }
     }
 
     private void selectAccount() {
         SharedPreferences sharedPreferences = getSharedPreferences("UserAccounts", MODE_PRIVATE);
-        Set<String> accountNames = sharedPreferences.getStringSet("accountNames", new HashSet<>());
+        Set<String> accountNames = new HashSet<>(sharedPreferences.getStringSet("accountNames", new HashSet<>()));
 
-        final String[] accountsArray = accountNames.toArray(new String[0]);
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Choisissez le compte:");
-        builder.setItems(accountsArray, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String accountName = accountsArray[which];
-                Intent intent = new Intent(MainActivity.this, menu_des_choix.class);
-                intent.putExtra("accountName", accountName);
-                startActivity(intent);
-            }
-        });
-
-        // Si aucun compte n'est enregistré, affichez un message
         if (accountNames.isEmpty()) {
-            Toast.makeText(MainActivity.this, "Aucun compte enregistré. Veuillez en créer un.", Toast.LENGTH_LONG).show();
-            return;
-        }
+            Toast.makeText(this, "Aucun compte enregistré. Veuillez en créer un.", Toast.LENGTH_LONG).show();
+        } else {
+            final String[] accountsArray = accountNames.toArray(new String[0]);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Choisissez le compte:");
+            builder.setItems(accountsArray, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String accountName = accountsArray[which];
+                    Intent intent = new Intent(MainActivity.this, Menu_des_choix.class);
+                    intent.putExtra("accountName", accountName); // Assurez-vous que 'selectedAccountName' est correct
+                    startActivity(intent);
+                }
+            });
 
-        builder.show();
+            builder.show();
+        }
     }
 }
