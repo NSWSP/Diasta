@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putStringSet("accountNames", accounts);
             editor.apply();
 
-            Intent intent = new Intent(MainActivity.this, accueil.class);
+            Intent intent = new Intent(MainActivity.this, menu_des_choix.class);
             intent.putExtra("accountName", accountName);
             startActivity(intent);
         } else {
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String accountName = accountsArray[which];
-                Intent intent = new Intent(MainActivity.this, accueil.class);
+                Intent intent = new Intent(MainActivity.this, menu_des_choix.class);
                 intent.putExtra("accountName", accountName);
                 startActivity(intent);
             }

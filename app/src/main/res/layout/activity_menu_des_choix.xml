@@ -18,6 +18,46 @@
         android:textColor="#FFFFFF"
         android:textSize="50sp" />
 
+    <Button
+        android:id="@+id/btnstats"
+        android:layout_width="359dp"
+        android:layout_height="110dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/rectangle"
+        android:text="Vos stats"
+        android:textColor="#FFFFFF"
+        android:textSize="50dp" />
+
+    <TextView
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="150dp"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:text="Que voulez-vous :"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/btncommentaire"
+        android:layout_width="359dp"
+        android:layout_height="110dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="350dp"
+        android:background="@drawable/rectangle"
+        android:text="Commentaire"
+        android:textColor="#FFFFFF"
+        android:textSize="50dp" />
+    <Button
+        android:layout_width="359dp"
+        android:layout_height="110dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="500dp"
+        android:background="@drawable/rectangle"
+        android:text="A venir ..."
+        android:textColor="#FFFFFF"
+        android:textSize="50dp" />
+
 
 
 
