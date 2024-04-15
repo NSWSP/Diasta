@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,37 +16,14 @@
         android:textColor="#FFFFFF"
         android:textSize="50sp" />
 
-    <ListView
-        android:id="@+id/listViewDisplay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp"
-        android:textSize="30sp"
-        android:text="Ici s'afficheront les données"/>
-
-    <Button
-        android:id="@+id/ajout_de_mesure"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="780dp"
-        android:text="Ajouter +"
-        android:textSize="20dp"/>
-
     <TextView
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="160dp"
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:text="Vos stats:"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp" />
-
-
-
-
-
-
+        android:id="@+id/textViewAdvice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_centerHorizontal="true"
+        android:padding="50dp"
+        android:textSize="18sp"
+        android:text="Les conseils s'afficheront ici" />
 
 </RelativeLayout>

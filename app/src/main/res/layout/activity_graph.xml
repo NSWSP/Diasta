@@ -17,24 +17,41 @@
         android:textColor="#FFFFFF"
         android:textSize="50sp" />
 
+    <!-- activity_graph.xml -->
     <EditText
-        android:id="@+id/editTextUserInput"
+        android:id="@+id/editTextMeasurement"
         android:layout_marginStart="10dp"
         android:layout_marginTop="160dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:hint="Entrez une valeur en mg/l"/>
+        android:hint="Entrez la valeur de la mesure"
+        android:inputType="numberDecimal"/>
+
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="210dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cliquez pour choisir l'heure"
+        android:textSize="18sp"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true" />
+
+
 
 
 
     <Button
-        android:id="@+id/buttonSubmit"
+        android:id="@+id/btnSubmit"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="70dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextUserInput"
+        android:layout_below="@id/editTextMeasurement"
         android:text="Soumettre"
         android:onClick="submitData"/>
 

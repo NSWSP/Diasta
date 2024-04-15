@@ -23,7 +23,7 @@
         android:layout_marginTop="150dp"
         android:layout_width="350dp"
         android:layout_height="60dp"
-        android:text="Choisissez le compte:"
+        android:text="Connexion:"
         android:textColor="#FFFFFF"
         android:textSize="30sp" />
     <Button
@@ -33,16 +33,17 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="200dp"
         android:background="@drawable/rectangle"
-        android:text="Utilisateur"
+        android:text="J'ai déjà un compte"
         android:textColor="#FFFFFF"
         android:textSize="30dp" />
     <Button
-
+        android:id="@+id/btnAjouterCompte"
         android:layout_width="359dp"
         android:layout_height="70dp"
         android:text="Ajouter un compte"
         android:textColor="#FFFFFF"
         android:textSize="30dp"
+        android:onClick="onAddAccountClicked"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="350dp"/>
     <TextView

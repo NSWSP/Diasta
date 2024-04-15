@@ -19,31 +19,33 @@ public class accueil extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private ArrayList<String> userInputList;
     private SharedPreferences sharedPreferences;
+    private String accountName; // Variable pour stocker le nom du compte
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
 
-        Button btnOuvrirAccueil = findViewById(R.id.btnRetourversMain);
-        Button ajout_de_mesure = findViewById(R.id.ajout_de_mesure);
+        Button ajoutDeMesure = findViewById(R.id.ajout_de_mesure);
         ListView listView = findViewById(R.id.listViewDisplay);
 
-        sharedPreferences = getSharedPreferences("UserInputPrefs", MODE_PRIVATE);
+        accountName = getIntent().getStringExtra("accountName");
+        sharedPreferences = getSharedPreferences(accountName, MODE_PRIVATE);
         loadData(listView);
 
-        setupButtonListeners(btnOuvrirAccueil, ajout_de_mesure);
+        ajoutDeMesure.setOnClickListener(v -> {
+            Intent intent = new Intent(accueil.this, graph.class);
+            intent.putExtra("accountName", accountName);
+            startActivity(intent);
+        });
     }
 
-
     private void loadData(ListView listView) {
-        // Récupération des données sous forme de Set, conversion en ArrayList
         Set<String> userInputSet = new HashSet<>(sharedPreferences.getStringSet("userInputs", new HashSet<>()));
         userInputList = new ArrayList<>(userInputSet);
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, userInputList);
         listView.setAdapter(adapter);
 
-        // Ajout d'un écouteur de clic long sur les éléments de la liste pour la suppression
         listView.setOnItemLongClickListener((parent, view, position, id) -> {
             confirmDeletion(position);
             return true;
@@ -56,8 +58,8 @@ public class accueil extends AppCompatActivity {
                 .setMessage("Voulez-vous supprimer cette entrée ?")
                 .setPositiveButton("Oui", (dialog, which) -> {
                     String itemToRemove = userInputList.remove(position);
-                    adapter.notifyDataSetChanged(); // Rafraîchir l'adapter
-                    updateSharedPreferences(); // Mise à jour des SharedPreferences
+                    adapter.notifyDataSetChanged();
+                    updateSharedPreferences();
                     Toast.makeText(accueil.this, "Entrée supprimée", Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton("Non", null)
@@ -67,16 +69,5 @@ public class accueil extends AppCompatActivity {
     private void updateSharedPreferences() {
         Set<String> updatedInputs = new HashSet<>(userInputList);
         sharedPreferences.edit().putStringSet("userInputs", updatedInputs).apply();
-    }
-
-    private void setupButtonListeners(Button btnOuvrirAccueil, Button ajout_de_mesure) {
-        btnOuvrirAccueil.setOnClickListener(v -> {
-            Intent intent = new Intent(accueil.this, MainActivity.class);
-            startActivity(intent);
-        });
-        ajout_de_mesure.setOnClickListener(v -> {
-            Intent intent = new Intent(accueil.this, graph.class);
-            startActivity(intent);
-        });
     }
 }
