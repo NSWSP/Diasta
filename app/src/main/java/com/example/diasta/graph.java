@@ -1,5 +1,6 @@
 package com.example.diasta;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,7 +20,7 @@ import java.util.Set;
 public class graph extends AppCompatActivity {
 
     private String accountName; // Variable membre pour le nom du compte
-    private TextView textViewTime; // TextView pour afficher l'heure sélectionnée
+    private TextView textViewTime, textViewDate; // TextView pour afficher l'heure et la date sélectionnées
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,32 +28,48 @@ public class graph extends AppCompatActivity {
         setContentView(R.layout.activity_graph);
 
         accountName = getIntent().getStringExtra("accountName");
-        textViewTime = findViewById(R.id.textViewTime); // Assurez-vous que ce TextView est correctement configuré dans votre layout
+        textViewTime = findViewById(R.id.textViewTime);
+        textViewDate = findViewById(R.id.textViewDate);
+        EditText editTextMeasurement = findViewById(R.id.editTextMeasurement);
 
+        setupTimePicker();
+        setupDatePicker();
+
+        findViewById(R.id.btnSubmit).setOnClickListener(v -> submitData(editTextMeasurement));
+    }
+
+    private void setupDatePicker() {
+        textViewDate.setOnClickListener(v -> {
+            Calendar currentDate = Calendar.getInstance();
+            int year = currentDate.get(Calendar.YEAR);
+            int month = currentDate.get(Calendar.MONTH);
+            int day = currentDate.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(graph.this, (view, year1, monthOfYear, dayOfMonth) ->
+                    textViewDate.setText(String.format(Locale.getDefault(), "%d-%02d-%02d", year1, monthOfYear + 1, dayOfMonth)), year, month, day);
+            datePickerDialog.show();
+        });
+    }
+
+    private void setupTimePicker() {
         textViewTime.setOnClickListener(v -> {
             Calendar currentTime = Calendar.getInstance();
             int hour = currentTime.get(Calendar.HOUR_OF_DAY);
             int minute = currentTime.get(Calendar.MINUTE);
 
-            TimePickerDialog timePickerDialog = new TimePickerDialog(graph.this, new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker view, int hourOfDay, int minuteOfHour) {
-                    textViewTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minuteOfHour));
-                }
-            }, hour, minute, true);
-
-            timePickerDialog.setTitle("Sélectionnez l'heure");
+            TimePickerDialog timePickerDialog = new TimePickerDialog(graph.this, (view, hourOfDay, minuteOfHour) ->
+                    textViewTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minuteOfHour)), hour, minute, true);
             timePickerDialog.show();
         });
     }
 
-    public void submitData(View view) {
-        EditText editTextMeasurement = findViewById(R.id.editTextMeasurement);
+    private void submitData(EditText editTextMeasurement) {
         String userInput = editTextMeasurement.getText().toString().trim();
         String timeInput = textViewTime.getText().toString();
+        String dateInput = textViewDate.getText().toString();
 
-        if (userInput.isEmpty() || timeInput.equals("Cliquez pour choisir l'heure")) {
-            Toast.makeText(this, "Veuillez entrer une mesure et sélectionner une heure.", Toast.LENGTH_SHORT).show();
+        if (userInput.isEmpty() || timeInput.equals("Cliquez pour choisir l'heure") || dateInput.equals("Cliquez pour choisir la date")) {
+            Toast.makeText(this, "Veuillez entrer une mesure, sélectionner une heure et une date.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -63,7 +80,7 @@ public class graph extends AppCompatActivity {
                 return;
             }
 
-            String formattedInput = timeInput + " : " + String.format("%.2f mg/dl", value);
+            String formattedInput = dateInput + " " + timeInput + " : " + String.format("%.2f mg/dl", value);  // Ajouter la date
 
             SharedPreferences sharedPreferences = getSharedPreferences(accountName, MODE_PRIVATE);
             Set<String> existingInputs = sharedPreferences.getStringSet("userInputs", new HashSet<>());
@@ -75,7 +92,8 @@ public class graph extends AppCompatActivity {
             editor.apply();
 
             editTextMeasurement.setText("");
-            textViewTime.setText("Cliquez pour choisir l'heure"); // Réinitialiser le TextView après l'ajout
+            textViewTime.setText("Cliquez pour choisir l'heure");
+            textViewDate.setText("Cliquez pour choisir la date");  // Réinitialiser le TextView après l'ajout
             Toast.makeText(this, "Donnée ajoutée", Toast.LENGTH_SHORT).show();
 
             // Préparer un intent pour retourner à l'accueil avec le nom du compte inclus

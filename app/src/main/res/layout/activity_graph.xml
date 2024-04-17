@@ -42,6 +42,17 @@
         android:focusable="true" />
 
 
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cliquez pour choisir la date"
+        android:layout_marginTop="260dp"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textSize="18sp" />
+
+
 
 
 
@@ -51,7 +62,7 @@
         android:layout_marginTop="70dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextMeasurement"
+        android:layout_below="@id/textViewDate"
         android:text="Soumettre"
         android:onClick="submitData"/>
 
