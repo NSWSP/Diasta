@@ -16,14 +16,23 @@
         android:textColor="#FFFFFF"
         android:textSize="50sp" />
 
+
     <TextView
-        android:id="@+id/textViewAdvice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:id="@+id/measurementTextView"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/commentTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="220dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:padding="50dp"
-        android:textSize="18sp"
-        android:text="Les conseils s'afficheront ici" />
+        android:text="Les conseils s'afficheront ici"
+        android:textSize="16sp" />
 
 </RelativeLayout>

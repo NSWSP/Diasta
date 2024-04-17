@@ -75,12 +75,12 @@ public class graph extends AppCompatActivity {
 
         try {
             double value = Double.parseDouble(userInput);
-            if (value < 0 || value > 200) {
+            if (value < 0 || value > 500) {
                 Toast.makeText(this, "La mesure doit être entre 0 et 200 mg/dl.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            String formattedInput = dateInput + " " + timeInput + " : " + String.format("%.2f mg/dl", value);  // Ajouter la date
+            String formattedInput = dateInput + " " + timeInput + " : " + String.format("%.2f mg/dL", value);  // Ajouter la date
 
             SharedPreferences sharedPreferences = getSharedPreferences(accountName, MODE_PRIVATE);
             Set<String> existingInputs = sharedPreferences.getStringSet("userInputs", new HashSet<>());

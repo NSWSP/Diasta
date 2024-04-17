@@ -5,13 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.Button;
 import androidx.appcompat.app.AlertDialog;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
@@ -19,10 +20,10 @@ import java.util.Set;
 
 public class accueil extends AppCompatActivity {
 
-    private ArrayAdapter<String> adapter;
+    private CustomAdapter adapter;
     private ArrayList<String> userInputList;
     private SharedPreferences sharedPreferences;
-    private String accountName; // Variable pour stocker le nom du compte
+    private String accountName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,30 +46,29 @@ public class accueil extends AppCompatActivity {
 
     private void loadData(ListView listView) {
         Set<String> userInputSet = new HashSet<>(sharedPreferences.getStringSet("userInputs", new HashSet<>()));
-        userInputList = new ArrayList<>();
-        for (String input : userInputSet) {
-            userInputList.add(formatDisplay(input));  // Format each entry for display
-        }
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, userInputList);
+        userInputList = new ArrayList<>(userInputSet);
+        Collections.sort(userInputList, new Comparator<String>() {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+
+            @Override
+            public int compare(String o1, String o2) {
+                try {
+                    Date date1 = dateFormat.parse(o1.split(" : ")[0]);
+                    Date date2 = dateFormat.parse(o2.split(" : ")[0]);
+                    return date2.compareTo(date1); // Tri décroissant
+                } catch (Exception e) {
+                    throw new IllegalArgumentException(e);
+                }
+            }
+        });
+
+        adapter = new CustomAdapter(this, userInputList);
         listView.setAdapter(adapter);
 
         listView.setOnItemLongClickListener((parent, view, position, id) -> {
             confirmDeletion(position);
             return true;
         });
-    }
-
-    private String formatDisplay(String input) {
-        try {
-            SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
-            SimpleDateFormat newFormat = new SimpleDateFormat("EEE, MMM d, yyyy 'at' HH:mm", Locale.getDefault());
-            String[] parts = input.split(" : ");  // Split the date-time part from the value
-            Date date = originalFormat.parse(parts[0]);
-            return newFormat.format(date) + " : " + parts[1];
-        } catch (Exception e) {
-            e.printStackTrace();
-            return input;  // Return original input in case of formatting failure
-        }
     }
 
     private void confirmDeletion(int position) {
